@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     "channels",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "allauth",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "accounts",
     "todos",
 ]
@@ -100,14 +106,6 @@ DATABASES = {
         "PASSWORD": os.environ.get("DB_PASSWORD"),
     }
 }
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -176,7 +174,45 @@ REST_FRAMEWORK = {
     ],
 }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(hours=3),
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.environ.get(
+                "GOOGLE_CLIENT_ID", "Google.ClientID.Not.Defined"
+            ),
+            "secret": os.environ.get(
+                "GOOGLE_CLIENT_SECRET", "Google.ClientSecret.Not.Defined"
+            ),
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "VERIFIED_EMAIL": True,
+    },
+    "linkedin": {
+        "SCOPE": ["r_basicprofile", "r_emailaddress"],
+        "PROFILE_FIELDS": [
+            "id",
+            "first-name",
+            "last-name",
+            "email-address",
+            "picture-url",
+            "public-profile-url",
+        ],
+    },
 }
+
+SOCIAL_LOGIN_GOOGLE_CALLBACK_URL = os.environ.get(
+    "GOOGLE_CALLBACK_URL", "Google.CallbackUrl.Not.Defined"
+)
+SOCIAL_LOGIN_LINKEDIN_CALLBACK_URL = os.environ.get(
+    "LINKEDIN_CALLBACK_URL", "Linkedin.CallbackUrl.Not.Defined"
+)
+
+REST_AUTH = {"USE_JWT": True}

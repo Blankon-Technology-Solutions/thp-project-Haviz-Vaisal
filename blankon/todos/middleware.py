@@ -40,7 +40,6 @@ class JwtAuthMiddleware(BaseMiddleware):
             return None
         else:
             decoded_data = jwt_decode(token, settings.SECRET_KEY, algorithms=["HS256"])
-
             scope["user"] = await get_user(validated_token=decoded_data)
         return await super().__call__(scope, receive, send)
 

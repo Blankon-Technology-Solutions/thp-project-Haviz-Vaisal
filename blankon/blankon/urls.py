@@ -4,7 +4,6 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from todos.views import index
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -17,9 +16,8 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("api/accounts/", include("accounts.urls")),
-    path("api/todos/", include("todos.urls")),
-    path("", index),
+    path("api/accounts/", include(("accounts.urls", "accounts"), namespace="accounts")),
+    path("api/todos/", include(("todos.urls", "todos"), namespace="todos")),
 ]
 
 if settings.ENABLE_SWAGGER:
