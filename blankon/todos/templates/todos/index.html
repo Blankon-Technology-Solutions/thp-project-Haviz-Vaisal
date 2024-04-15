@@ -1,0 +1,12 @@
+<html>
+<script>
+    const ws = new WebSocket("ws://localhost:8090/ws/todos/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEzMTc0ODAwLCJqdGkiOiI0NDJkNWFhZjlkYTM0OGFkOGQ1MDMwYzhkZjYxOTA4MyIsInVzZXJfaWQiOjEsInVzZXJuYW1lIjoidXNlcjVAZXhhbXBsZS5jb20ifQ.BY-0L2IVjBOknv1wZjbtJ4eIS2Btc08la6zBIHVyaEU");
+    ws.onopen = function () {
+        console.log("Connected");
+    }
+    ws.onmessage = function (e) {
+        console.log(e);
+    }
+</script>
+
+</html>
